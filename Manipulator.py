@@ -32,9 +32,20 @@ while True:
         except:
             print("Error occurred")
 
+
+    def stegano_graph_show(img):
+        img = img
+
+        try:
+            reveal = lsb.reveal(img)
+            print(f"Message revealed: \n{reveal}")
+        except:
+            print("Cannot find anything")
+
+
     mode = main()
     if mode == "0":
-        print("Stegano graph encode mode loaded")
+        print("Stegano graph encode mode loaded ")
         print("Select Image file:  ")
         img = tkinter.filedialog.askopenfilename()
         msg = input("Now enter your message:  ")
@@ -42,7 +53,10 @@ while True:
         print(f"All done!\n Your stegano art is in the same folder as the image\n")
 
     elif mode == "1":
-        pass
+        print("Stegano graph decode mode loaded ")
+        print("Select Image file:  ")
+        img = tkinter.filedialog.askopenfilename()
+        stegano_graph_show(img)
     elif mode == "2":
         pass
     elif mode == "3":
