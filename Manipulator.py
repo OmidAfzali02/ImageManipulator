@@ -43,6 +43,10 @@ while True:
             print("Cannot find anything")
 
 
+    def ascii(img):
+        pk.image_to_ascii_art(img, "ascii art")
+
+
     mode = main()
     if mode == "0":
         print("Stegano graph encode mode loaded ")
@@ -50,15 +54,21 @@ while True:
         img = tkinter.filedialog.askopenfilename()
         msg = input("Now enter your message:  ")
         stegano_graph_hide(img, msg)
-        print(f"All done!\n Your stegano art is in the same folder as the image\n")
+        print("All done!\n Your stegano art is in the same folder as the image\n")
 
     elif mode == "1":
         print("Stegano graph decode mode loaded ")
         print("Select Image file:  ")
         img = tkinter.filedialog.askopenfilename()
         stegano_graph_show(img)
+
     elif mode == "2":
-        pass
+        print("ascii mode loaded ")
+        print("Select Image file:  ")
+        img = tkinter.filedialog.askopenfilename()
+        ascii(img)
+        print("All done!\n Your ascii art is in the same folder as the image\n")
+
     elif mode == "3":
         pass
     elif mode == "q":
