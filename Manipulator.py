@@ -130,11 +130,15 @@ while True:
 
     elif mode == "3":
         print("Object Detector loaded ")
-        mode = int(input("0-from an image, 1-from webcam:  "))
+        mode = input("0-from an image, 1-from webcam:  ")
+        try:
+            mode = int(mode)
+        except:
+            print("Please select from available modes ")
         if mode == 0:
             img = tkinter.filedialog.askopenfilename()
             obj_det(0, img)
-        else:
+        elif mode == 1:
             obj_det(1, cv2.VideoCapture(0))
 
     elif mode == "q":
