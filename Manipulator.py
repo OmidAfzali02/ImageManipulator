@@ -2,6 +2,7 @@ import pywhatkit as pk
 from stegano import lsb
 import tkinter
 from tkinter import filedialog
+import cv2
 
 modes = ["0", "1", "2", "3", "4", "5", "q"]
 
@@ -11,6 +12,7 @@ while True:
         print("0- Stegano graph encoding")
         print("1- Stegano graph decoding")
         print("2- ascii creator")
+        print("3- Object detection")
         print("q- Quit")
 
         mode = input("\nSelect preferred mode:  ")
