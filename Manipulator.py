@@ -1,10 +1,9 @@
 import pywhatkit as pk
 from stegano import lsb
-import tkinter
 from tkinter import filedialog
 import cv2
 
-modes = ["0", "1", "2", "3", "q"]
+modes = ["0", "1", "2", "3", "4", "q"]
 
 while True:
     def main():
@@ -13,6 +12,7 @@ while True:
         print("1- Stegano graph decoding")
         print("2- ascii creator")
         print("3- Object detection")
+        print("4- Face detection")
         print("q- Quit")
 
         mode = input("\nSelect preferred mode:  ")
@@ -106,11 +106,37 @@ while True:
             cap.release()
 
 
+    def face_det(mode, img):
+        trained_face_data = cv2.CascadeClassifier("P:/Haar Cascade Algorithms/haarcascade_frontalface_default.xml")
+
+        if mode == "0":
+            img = cv2.imread(img)
+            gray_scaled_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            face_coordinates = trained_face_data.detectMultiScale(gray_scaled_img)
+            for (x, y, w, h) in face_coordinates:
+                cv2.rectangle(img, [x, y], [x + w, y + h], (randrange(256), randrange(256), randrange(256)), 2)
+            cv2.imshow(f"Face Detection", img)
+            cv2.waitKey()
+        else:
+            vid = cv2.VideoCapture(0)
+            while True:
+                successful_frame_read, frame = vid.read()
+                gray_scaled_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                face_coordinates = trained_face_data.detectMultiScale(gray_scaled_img)
+                for (x, y, w, h) in face_coordinates:
+                    cv2.rectangle(frame, [x, y], [x + w, y + h], (randrange(128), randrange(128), randrange(128)), 2)
+                cv2.imshow(f"Face Detection", frame)
+                key = cv2.waitKey(1)
+                if key == 81 or key == 113:
+                    break
+            vid.release()
+
+
     mode = main()
     if mode == "0":
         print("Stegano graph encode mode loaded ")
         print("Select Image file:  ")
-        img = tkinter.filedialog.askopenfilename()
+        img = filedialog.askopenfilename()
         msg = input("Now enter your message:  ")
         stegano_graph_hide(img, msg)
         print("All done!\n Your stegano art is in the same folder as the image\n")
@@ -118,27 +144,32 @@ while True:
     elif mode == "1":
         print("Stegano graph decode mode loaded ")
         print("Select Image file:  ")
-        img = tkinter.filedialog.askopenfilename()
+        img = filedialog.askopenfilename()
         stegano_graph_show(img)
 
     elif mode == "2":
         print("ascii mode loaded ")
         print("Select Image file:  ")
-        img = tkinter.filedialog.askopenfilename()
+        img = filedialog.askopenfilename()
         ascii(img)
         print("All done!\n Your ascii art is in the same folder as the image\n")
 
     elif mode == "3":
         print("Object Detector loaded ")
         mode = input("0-from an image, 1-from webcam:  ")
-        try:
-            mode = int(mode)
-        except:
-            print("Please select from available modes ")
-        if mode == 0:
-            img = tkinter.filedialog.askopenfilename()
+        if mode == "0":
+            img = filedialog.askopenfilename()
             obj_det(0, img)
-        elif mode == 1:
+        elif mode == "1":
+            obj_det(1, cv2.VideoCapture(0))
+
+    elif mode == "4":
+        print("Face detection loaded ")
+        mode = input("0-from an image, 1-from webcam:  ")
+        if mode == "0":
+            img = filedialog.askopenfilename()
+            obj_det(0, img)
+        elif mode == "1":
             obj_det(1, cv2.VideoCapture(0))
 
     elif mode == "q":
