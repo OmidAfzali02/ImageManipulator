@@ -168,9 +168,9 @@ while True:
         mode = input("0-from an image, 1-from webcam:  ")
         if mode == "0":
             img = filedialog.askopenfilename()
-            obj_det(0, img)
+            face_det(0, img)
         elif mode == "1":
-            obj_det(1, cv2.VideoCapture(0))
+            face_det(1, cv2.VideoCapture(0))
 
     elif mode == "q":
         break
